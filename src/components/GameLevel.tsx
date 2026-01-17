@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Volume2, VolumeX, RotateCcw, Brain, Smile, Meh, Frown, Lightbulb, Trophy, ArrowLeft } from 'lucide-react';
 import { COLORS, GameStatus, AiMood, GuessHistory } from '../data/gameData';
 import { LevelConfig } from '../data/levels';
@@ -28,9 +28,20 @@ export const GameLevel: React.FC<GameLevelProps> = ({ level, theme, onComplete, 
   const [aiMessage, setAiMessage] = useState(level.description || '系统已初始化。');
   const audioContextRef = useRef<AudioContext | null>(null);
 
+  const initializeGame = useCallback(() => {
+    const newCode = generateSecretCode(level.difficulty);
+    setSecretCode(newCode);
+    setCurrentGuess(new Array(level.difficulty).fill(0));
+    setGuessHistory([]);
+    setGameStatus('playing');
+    setRemainingAttempts(level.maxAttempts);
+    setAiMood('thinking');
+    setAiMessage(level.description || '系统就绪，等待输入序列。');
+  }, [level]);
+
   useEffect(() => {
     initializeGame();
-  }, [level]);
+  }, [initializeGame]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -54,17 +65,6 @@ export const GameLevel: React.FC<GameLevelProps> = ({ level, theme, onComplete, 
       code.push(Math.floor(Math.random() * COLORS.length));
     }
     return code;
-  };
-
-  const initializeGame = () => {
-    const newCode = generateSecretCode(level.difficulty);
-    setSecretCode(newCode);
-    setCurrentGuess(new Array(level.difficulty).fill(0));
-    setGuessHistory([]);
-    setGameStatus('playing');
-    setRemainingAttempts(level.maxAttempts);
-    setAiMood('thinking');
-    setAiMessage(level.description || '系统就绪，等待输入序列。');
   };
 
   const checkGuess = (guess: number[], secret: number[]) => {
@@ -230,6 +230,13 @@ export const GameLevel: React.FC<GameLevelProps> = ({ level, theme, onComplete, 
                       ></div>
                     ))}
                   </div>
+                </div>
+
+                <div className="flex items-center gap-3 mb-4">
+                  {getAiIcon()}
+                  <p className="text-sm font-mono text-slate-300">
+                    {aiMessage}
+                  </p>
                 </div>
 
                  {/* History Scroll */}

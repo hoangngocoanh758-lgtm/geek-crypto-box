@@ -47,5 +47,6 @@ export const THEMES: Record<string, Theme> = {
 };
 
 export const getThemeForLevel = (level: number): Theme => {
+  void level;
   return THEMES.deep_indigo;
 };

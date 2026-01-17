@@ -150,7 +150,6 @@ export const AIAnalytics: React.FC<AIAnalyticsProps> = ({ theme, history, diffic
             <Activity className={`w-6 h-6 text-indigo-500 opacity-50`} />
           </div>
 
-          {/* Analysis Grid */}
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div className={`p-4 rounded-lg bg-slate-950/50 border border-slate-800`}>
               <div className={`text-[10px] uppercase tracking-wider text-slate-500 mb-2 flex items-center gap-1`}>
@@ -165,6 +164,9 @@ export const AIAnalytics: React.FC<AIAnalyticsProps> = ({ theme, history, diffic
                   className={`h-full bg-indigo-500 transition-all duration-500`} 
                   style={{ width: `${Math.min(100, (possibleCombinations / Math.pow(6, difficulty)) * 100)}%` }}
                 ></div>
+              </div>
+              <div className="mt-3 text-[11px] text-slate-400 font-mono">
+                剩余尝试次数 {remainingAttempts}
               </div>
             </div>
 
