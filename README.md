@@ -1,57 +1,157 @@
-# React + TypeScript + Vite
+# 极客密码机 (Geek Code Breaker)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)
+![React](https://img.shields.io/badge/React-18-61DAFB.svg?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6.svg?logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-6.0-646CFF.svg?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4-38B2AC.svg?logo=tailwind-css&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E.svg?logo=supabase&logoColor=white)
 
-Currently, two official plugins are available:
+[中文文档 (Chinese)](README_ZH.md)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Introduction
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+**Geek Code Breaker** is a modern, high-fidelity logic puzzle web application inspired by the classic board game *Mastermind*, reimagined with a deep "Cyberpunk" aesthetic.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Players assume the role of a system intruder (Hacker), tasked with breaching 100 layers of security firewalls. Using pure logic, deduction, and pattern recognition, you must crack the color-coded encryption sequences within limited attempts.
+
+This project is built as a showcase of **Modern Frontend Engineering**, demonstrating how to build a production-grade application with complex state management, real-time cloud synchronization, AI-assisted analytics, and high-performance rendering.
+
+## ✨ Key Features
+
+### 🎮 Immersive Gameplay Experience
+*   **100-Level Progression System**: A meticulously designed campaign mode with 100 levels.
+*   **Dynamic Difficulty Scaling**:
+    *   **Novice (Levels 1-10)**: 3-slot sequences to learn the basics.
+    *   **Hacker (Levels 11-40)**: 4-slot sequences introducing standard difficulty.
+    *   **Expert (Levels 41+)**: 5-slot sequences requiring advanced logical deduction.
+*   **Milestone Challenges**: Every 10th level is a "Security Core" milestone, featuring unique visual cues and serving as a testament to your skills.
+
+### 🧠 Intelligent AI Assistant
+*   **Real-time Entropy Analysis**: The built-in AI (`AIAnalytics.tsx`) calculates the **Information Entropy** of the current board state in real-time, visualizing the "chaos" remaining in the system.
+*   **Smart Deduction Engine**:
+    *   Analyzes your entire guess history.
+    *   Identifies **"Strong Candidates"**: Colors that are mathematically likely to be part of the solution.
+    *   Flags **"Dead Colors"**: Colors that have been logically proven to not exist in the sequence.
+*   **Emotional AI Personality**: The AI assistant reacts to your gameplay with dynamic moods (Thinking, Happy, Sad, Neutral), adding a layer of companionship to the solitary hacking experience.
+
+### ☁️ Cloud Synchronization & Identity
+*   **Hybrid Storage Architecture**:
+    *   **Local First**: Game progress is instantly saved to `localStorage` for zero-latency updates.
+    *   **Cloud Backup**: Asynchronously syncs progress to a **Supabase PostgreSQL** database.
+*   **Seamless Session Roaming**:
+    *   Play anonymously on a new device.
+    *   Register/Login to an account later.
+    *   **Smart Merge**: The system automatically detects and merges your anonymous progress into your cloud account upon login, ensuring no data is ever lost.
+
+### 🎨 Cyberpunk Design System
+*   **Tailwind CSS Powered**: A bespoke dark-mode design system (`designSystem.ts`) featuring:
+    *   Deep indigo/slate gradients (`bg-slate-950`).
+    *   Glassmorphism effects on cards and panels.
+    *   Neon accents for interactive elements.
+*   **Responsive & Accessible**: Fully optimized for Desktop, Tablet, and Mobile viewports with touch-friendly targets.
+
+### 🔊 Audio Synthesis
+*   **Web Audio API**: Instead of loading static MP3 files, the game uses the browser's native `AudioContext` to synthesize sound effects (oscillators, gain nodes) in real-time. This results in:
+    *   Zero network latency for audio.
+    *   Extremely low memory footprint.
+    *   Dynamic pitch modulation based on game events.
+
+## 🛠️ Tech Stack
+
+| Category | Technology | Purpose |
+| :--- | :--- | :--- |
+| **Core** | **React 18** | UI Library (Hooks, Functional Components) |
+| **Language** | **TypeScript 5** | Strict type safety for complex game logic |
+| **Build** | **Vite 6** | Next-gen frontend tooling, instant HMR |
+| **Styling** | **Tailwind CSS 3.4** | Utility-first styling with `clsx` & `tailwind-merge` |
+| **Backend** | **Supabase** | Auth, Database, and Row Level Security (RLS) |
+| **Icons** | **Lucide React** | Consistent, lightweight SVG iconography |
+| **Routing** | **React Router 7** | Client-side routing management |
+
+## 🕹️ Gameplay Guide
+
+1.  **The Objective**: Deduce the hidden color code generated by the security mainframe.
+2.  **Making a Guess**:
+    *   Tap the colored spheres at the bottom of the control panel to fill the empty slots.
+    *   You can change your selection before submitting.
+3.  **Deciphering Feedback**:
+    *   Upon submission, you receive "Data Bits" (feedback pegs):
+    *   ⚫ **Black Bit**: One of your colors is **Correct** and in the **Correct Position**.
+    *   ⚪ **White Bit**: One of your colors is **Correct** but in the **Wrong Position**.
+    *   **Empty**: The color does not exist in the code at all.
+4.  **Strategy**: Use the feedback to narrow down possibilities. If you get 2 Black Bits and 2 White Bits, you know all 4 colors are correct, but 2 need to swap places.
+
+## 📂 Project Structure
+
+```bash
+src/
+├── assets/          # Static assets (images, global svgs)
+├── components/      # Reusable React components
+│   ├── AIAnalytics.tsx  # The brain of the AI assistant
+│   ├── GameLevel.tsx    # Core game loop and board rendering
+│   ├── LevelSelector.tsx # Grid view for level selection
+│   └── ...
+├── data/            # Game configuration and static data
+│   ├── gameData.ts      # Color definitions, difficulty constants
+│   └── levels.ts        # Procedural level generation logic
+├── hooks/           # Custom React Hooks
+│   └── useTheme.ts      # Theme switching logic
+├── lib/             # Infrastructure code
+│   ├── supabaseClient.ts # Singleton Supabase client
+│   └── utils.ts         # CN/Tailwind helpers
+├── pages/           # Route-level components
+├── theme/           # Design System tokens
+│   └── designSystem.ts  # Centralized theme configuration
+├── App.tsx          # Main application logic & Auth state
+└── main.tsx         # React DOM entry point
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## ⚡ Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prerequisites
+*   Node.js (v18 or higher recommended)
+*   npm or yarn
 
-export default tseslint.config({
-  extends: [
-    // other configs...
-    // Enable lint rules for React
-    reactX.configs['recommended-typescript'],
-    // Enable lint rules for React DOM
-    reactDom.configs.recommended,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Installation
+
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/yourusername/geek-code-breaker.git
+    cd web
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Environment Setup**
+    Create a `.env` file in the root directory (copy from `.env.example` if available):
+    ```env
+    VITE_SUPABASE_URL=your_supabase_project_url
+    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+    ```
+    *Note: You will need a Supabase project with a `game_users` and `level_progress` table setup.*
+
+4.  **Start Development Server**
+    ```bash
+    npm run dev
+    ```
+    Open `http://localhost:5173` in your browser.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
+
+## 📄 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
